@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skoji.dev/shelff/schemas/tags/v1",
+  "title": "shelff Tag Order",
+  "description": "Display ordering for tags. Stored at .shelff/tag-order.json in the shelff documents directory. Note: this file only defines the display order of tags. The canonical set of tags is derived by scanning all sidecar files; tags not listed here are appended in alphabetical order.",
+  "type": "object",
+  "required": ["version", "tagOrder"],
+  "additionalProperties": true,
+  "properties": {
+    "version": {
+      "type": "integer",
+      "const": 1,
+      "description": "Schema version. Must be 1 for this version of the specification."
+    },
+    "tagOrder": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tag names in display order. Tags present in sidecar files but absent from this list are appended in alphabetical order."
+    }
+  }
+}

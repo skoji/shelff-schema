@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://skoji.dev/shelff/schemas/categories/v1",
+  "title": "shelff Category List",
+  "description": "Ordered list of categories. Stored at .shelff/categories.json in the shelff documents directory.",
+  "type": "object",
+  "required": ["version", "categories"],
+  "additionalProperties": true,
+  "properties": {
+    "version": {
+      "type": "integer",
+      "const": 1,
+      "description": "Schema version. Must be 1 for this version of the specification."
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/CategoryItem"
+      },
+      "description": "Ordered list of categories. The 'order' field of each item reflects its position in the list."
+    }
+  },
+  "$defs": {
+    "CategoryItem": {
+      "type": "object",
+      "required": ["name", "order"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Category name. Must be non-empty after trimming whitespace. Unique within the list."
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Display order (0-indexed). Should be contiguous and match the array index after normalization."
+        }
+      }
+    }
+  }
+}

@@ -33,6 +33,20 @@ If no sidecar file exists, the PDF has no shelff metadata (title falls back to t
 
 **Schema**: [sidecar.schema.json](./sidecar.schema.json)
 
+#### Bookmarks
+
+The `bookmarks` field stores user-defined page bookmarks (digital "sticky notes"). Each entry has a `page` (1-indexed integer) and an optional `label` string. Bookmarks are distinct from the PDF's built-in document outline; they are added by the reader to mark pages of interest.
+
+```json
+"bookmarks": [
+  { "page": 3, "label": "Important diagram" },
+  { "page": 15 },
+  { "page": 42 }
+]
+```
+
+When `label` is absent, the reader UI may render a fallback such as the page number.
+
 ### Category List (`.shelff/categories.json`)
 
 An ordered list of categories. Each PDF can belong to at most one category, specified by the `category` field in its sidecar. Categories must be defined in this file to appear in the UI, but a sidecar may reference a category name not yet listed here (it will be treated as uncategorized until the category is created).

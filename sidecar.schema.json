@@ -29,6 +29,11 @@
       "type": "array",
       "items": { "type": "string" },
       "description": "Tags assigned to this book. A book can have zero or more tags."
+    },
+    "bookmarks": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/Bookmark" },
+      "description": "User-defined page bookmarks. Distinct from the PDF document outline; these are added by the reader to mark pages of interest."
     }
   },
   "$defs": {
@@ -118,6 +123,23 @@
           "type": "string",
           "enum": ["single", "spread", "spread-with-cover"],
           "description": "Page layout mode. 'single' = one page at a time, 'spread' = two pages side by side, 'spread-with-cover' = spread with first page displayed alone."
+        }
+      }
+    },
+    "Bookmark": {
+      "type": "object",
+      "description": "A user-defined bookmark on a specific page.",
+      "required": ["page"],
+      "additionalProperties": false,
+      "properties": {
+        "page": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "The bookmarked page number (1-indexed)."
+        },
+        "label": {
+          "type": "string",
+          "description": "Optional user-supplied label for this bookmark."
         }
       }
     }

@@ -111,14 +111,20 @@ Round-trip note: tools that rewrite `display` must preserve `crop`.
 
 #### Archive
 
-The `archivedAt` field marks a book as archived: kept in the library but put away from everyday views. The field is optional; when absent, the book is not archived.
+The `archive` object marks a book as archived: kept in the library but put away from everyday views. The object is optional; when absent, the book is not archived.
 
 ```json
-"archivedAt": "2026-10-27T01:02:03Z"
+"archive": {
+  "isArchived": true,
+  "changedAt": "2026-10-27T01:02:03Z"
+}
 ```
 
-- `archivedAt` (string, date-time, optional): when the book was archived, as an ISO 8601 date-time in UTC. Unarchiving removes the field.
+- `isArchived` (boolean, required): whether the book is archived.
+- `changedAt` (string, date-time, required): when `isArchived` last changed, as an ISO 8601 date-time in UTC. Writers update it only when `isArchived` actually changes; re-saving the same state keeps it.
+- Unarchiving keeps the object with `isArchived: false` and a new `changedAt`. Removing the object instead would make an unarchive indistinguishable from never having been archived, and it would lose to an older archive when merging.
 - Archiving is independent of `reading.status`: archiving or unarchiving a book does not change its reading status, and a book in any reading status can be archived.
+- When merging conflicting copies of a sidecar, take `archive` from the copy with the newest `changedAt` (or from the only copy that has one), independently of how the other fields are merged.
 - Readers may hide archived books from their default views, but must not delete them or their metadata. Archived books remain part of the library.
 
 ### Category List (`.shelff/categories.json`)

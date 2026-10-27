@@ -109,6 +109,18 @@ Validity: each side must be `>= 0`, `top + bottom < 1`, and `left + right < 1`. 
 
 Round-trip note: tools that rewrite `display` must preserve `crop`.
 
+#### Archive
+
+The `archivedAt` field marks a book as archived: kept in the library but put away from everyday views. The field is optional; when absent, the book is not archived.
+
+```json
+"archivedAt": "2026-10-27T01:02:03Z"
+```
+
+- `archivedAt` (string, date-time, optional): when the book was archived, as an ISO 8601 date-time in UTC. Unarchiving removes the field.
+- Archiving is independent of `reading.status`: archiving or unarchiving a book does not change its reading status, and a book in any reading status can be archived.
+- Readers may hide archived books from their default views, but must not delete them or their metadata. Archived books remain part of the library.
+
 ### Category List (`.shelff/categories.json`)
 
 An ordered list of categories. Each PDF can belong to at most one category, specified by the `category` field in its sidecar. Categories must be defined in this file to appear in the UI, but a sidecar may reference a category name not yet listed here (it will be treated as uncategorized until the category is created).

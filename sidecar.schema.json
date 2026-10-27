@@ -38,6 +38,11 @@
     "collection": {
       "$ref": "#/$defs/Collection",
       "description": "The collection (series or magazine) this book belongs to. A book can belong to at most one collection."
+    },
+    "archivedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the book was archived. ISO 8601 date-time in UTC. Absent means not archived. Independent of reading.status."
     }
   },
   "$defs": {
